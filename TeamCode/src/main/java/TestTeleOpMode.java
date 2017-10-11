@@ -78,7 +78,7 @@ public class TestTeleOpMode extends OpMode{
         //Assigning power to each servo
 
         Leftservopower = -Clamppower;        //might need to reverse the negative sign
-        Rightservopower = Clamppower;
+        Rightservopower = Clamppower;       // Jim's Test
 
         //Applying power to motors and servos
 
