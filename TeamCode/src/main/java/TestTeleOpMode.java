@@ -57,7 +57,7 @@ public class TestTeleOpMode extends OpMode{
         //Assigning gamepad values
 
         Leftstick = -gamepad1.left_stick_y;
-        Rightstick = gamepad1.left_stick_x;
+        Rightstick = gamepad1.right_stick_x;
 
         Clamppower += (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3) ? 0.05 :
                 (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5) ? - 0.05 : 0;
