@@ -75,10 +75,12 @@ public class TestTeleOpMode extends OpMode{
         Leftpower = Range.clip(Leftstick + Rightstick, -1.0, 1.0);
         Rightpower = Range.clip(Leftstick - Rightstick, -1.0, 1.0);
 
-        //Assigning power to each servo
+        //Assigning power to each servo and clipping Clamppower
 
-        Leftservopower = -Clamppower;        //might need to reverse the negative sign
-        Rightservopower = Clamppower;       // Jim's Test
+        Clamppower = Range.clip(Clamppower, -1.0, 1.0);
+
+        Leftservopower = -Clamppower;   //might need to reverse the negative sign
+        Rightservopower = Clamppower;
 
         //Applying power to motors and servos
 
@@ -88,8 +90,8 @@ public class TestTeleOpMode extends OpMode{
         Rightback.setPower(Rightpower);
         Lift.setPower(Liftpower);
 
-        Leftclamp.setPosition(Range.clip(Leftservopower, -1.0, 1.0));
-        Rightclamp.setPosition(Range.clip(Rightservopower, -1.0, 1.0));
+        Leftclamp.setPosition(Leftservopower);
+        Rightclamp.setPosition(Rightservopower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
