@@ -63,8 +63,8 @@ public class TestTeleOpMode extends OpMode{
         clampMotorPower += (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3) ? 0.05 :
                 (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5) ? - 0.05 : 0;
 
-        liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -0.5 :
-                    !gamepad1.dpad_up && gamepad2.dpad_down ? 0.5 : 0.0;
+        liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -1 :
+                    !gamepad1.dpad_up && gamepad2.dpad_down ? 1 : 0.0;
 
         //Testing JOYSTICK_DEADBAND
 
