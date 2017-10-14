@@ -43,7 +43,14 @@ public class TestTeleOpMode extends OpMode{
 
         //Preassigning clampMotorPower
 
-        clampMotorPower = -1.0;
+        clampMotorPower = -0.88;
+
+        //Moves turns on lift motor for 3 seconds to make sure the lift is at the bottom
+        long t= System.currentTimeMillis();
+        long end = t+3000;
+        while(System.currentTimeMillis() < end) {
+            liftMotorPower = 1;
+        }
     }
 
     //Code that resets the elapsed time once the driver hits play
