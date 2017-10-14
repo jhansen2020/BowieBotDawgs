@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import static android.os.SystemClock.sleep;
+
 @TeleOp(name = "TestTeleOpMode", group = "TeleOp")
 public class TestTeleOpMode extends OpMode{
 
@@ -46,11 +48,16 @@ public class TestTeleOpMode extends OpMode{
         clampMotorPower = -0.88;
 
         //Moves turns on lift motor for 3 seconds to make sure the lift is at the bottom
-        long t= System.currentTimeMillis();
-        long end = t+3000;
-        while(System.currentTimeMillis() < end) {
-            liftMotorPower = 1;
-        }
+//        long t= System.currentTimeMillis();
+//        long end = t+3000;
+//        while(System.currentTimeMillis() < end) {
+//            liftMotorPower = 1;
+//            sleep(3);
+
+        liftMotorPower = 1;
+        sleep(3);
+        
+//
     }
 
     //Code that resets the elapsed time once the driver hits play
