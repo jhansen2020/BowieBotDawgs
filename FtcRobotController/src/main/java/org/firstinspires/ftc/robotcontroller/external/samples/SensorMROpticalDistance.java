@@ -66,6 +66,8 @@ public class SensorMROpticalDistance extends LinearOpMode {
       telemetry.addData("Normal", odsSensor.getLightDetected());
 
       telemetry.update();
+
+
     }
   }
 }
