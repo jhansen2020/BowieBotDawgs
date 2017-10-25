@@ -56,7 +56,7 @@ public class TestTeleOpMode extends OpMode{
 
         liftMotorPower = 1;
         sleep(3);
-        
+
 //
     }
 
