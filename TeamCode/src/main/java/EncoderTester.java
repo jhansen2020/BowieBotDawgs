@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 
-@TeleOp(name="EncoderTester", group="Test")
+@Autonomous(name="EncoderTester", group="Test")
 //@Disabled
 public class EncoderTester extends LinearOpMode {
 

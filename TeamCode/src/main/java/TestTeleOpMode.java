@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import static android.os.SystemClock.sleep;
 
 @TeleOp(name = "TestTeleOpMode", group = "TeleOp")
+
 public class TestTeleOpMode extends OpMode{
 
     //Creating variables
@@ -45,7 +46,7 @@ public class TestTeleOpMode extends OpMode{
 
         //Preassigning clampMotorPower
 
-        clampMotorPower = -0.88;
+
 
         //Moves turns on lift motor for 3 seconds to make sure the lift is at the bottom
 //        long t= System.currentTimeMillis();
@@ -64,6 +65,10 @@ public class TestTeleOpMode extends OpMode{
     @Override
     public void start() {
         runtime.reset();
+
+        rightServoPower = 0.75;
+        leftServoPower = -0.75;
+
     }
 
     @Override
@@ -74,8 +79,17 @@ public class TestTeleOpMode extends OpMode{
         leftJoyStick = -gamepad1.left_stick_y;
         rightJoyStick = gamepad1.right_stick_x;
 
-        clampMotorPower += (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3) ? 0.05 :
-                (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5) ? - 0.05 : 0;
+        //clampMotorPower = (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3) ? .75 :
+         //       (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5) ? - 1 : clampMotorPower;
+
+        if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
+            rightServoPower = 0.0;
+            leftServoPower = 0.75;
+        } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
+            rightServoPower = 0.75;
+            leftServoPower = -0.75;
+        }
+
 
         liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -1 :
                     !gamepad1.dpad_up && gamepad2.dpad_down ? 1 : 0.0;
@@ -94,10 +108,10 @@ public class TestTeleOpMode extends OpMode{
 
         clampMotorPower = Range.clip(clampMotorPower, -1.0, 1.0);
 
-        leftServoPower = -clampMotorPower;   //might need to reverse the negative sign
-        rightServoPower = clampMotorPower;
+//        leftServoPower = -clampMotorPower;
+//        rightServoPower = -clampMotorPower;
 
-        //Applying power to motors and servos
+        //Applying power to motors and servosZ
 
         leftFrontMotor.setPower(leftMotorPower);
         leftBackMotor.setPower(leftMotorPower);
@@ -111,6 +125,8 @@ public class TestTeleOpMode extends OpMode{
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftMotorPower, rightMotorPower);
+        telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);
+        telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
         telemetry.addData("Servo:", clampMotorPower);
     }
 }
