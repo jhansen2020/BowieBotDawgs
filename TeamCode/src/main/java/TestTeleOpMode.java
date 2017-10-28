@@ -86,7 +86,7 @@ public class TestTeleOpMode extends OpMode{
             rightServoPower = 0.0;
             leftServoPower = 0.75;
         } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
-            rightServoPower = 0.75;
+            rightServoPower = 1.0;
             leftServoPower = -0.75;
         }
 
@@ -111,7 +111,7 @@ public class TestTeleOpMode extends OpMode{
 //        leftServoPower = -clampMotorPower;
 //        rightServoPower = -clampMotorPower;
 
-        //Applying power to motors and servosZ
+        //Applying power to motors and servos
 
         leftFrontMotor.setPower(leftMotorPower);
         leftBackMotor.setPower(leftMotorPower);
@@ -127,6 +127,6 @@ public class TestTeleOpMode extends OpMode{
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftMotorPower, rightMotorPower);
         telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);
         telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
-        telemetry.addData("Servo:", clampMotorPower);
+
     }
 }
