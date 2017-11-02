@@ -44,21 +44,9 @@ public class MainTeleOpMode extends OpMode{
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //Preassigning clampMotorPower
 
-
-
-        //Moves turns on lift motor for 3 seconds to make sure the lift is at the bottom
-//        long t= System.currentTimeMillis();
-//        long end = t+3000;
-//        while(System.currentTimeMillis() < end) {
-//            liftMotorPower = 1;
-//            sleep(3);
-
-        liftMotorPower = 1;
-        sleep(3);
-
-//
+        rightServoPower = 0.75;
+        leftServoPower = -0.75;
     }
 
     //Code that resets the elapsed time once the driver hits play
@@ -66,8 +54,7 @@ public class MainTeleOpMode extends OpMode{
     public void start() {
         runtime.reset();
 
-        rightServoPower = 0.75;
-        leftServoPower = -0.75;
+
 
     }
 
@@ -79,15 +66,13 @@ public class MainTeleOpMode extends OpMode{
         leftJoyStick = -gamepad1.left_stick_y;
         rightJoyStick = gamepad1.right_stick_x;
 
-        //clampMotorPower = (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3) ? .75 :
-        //       (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5) ? - 1 : clampMotorPower;
 
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
             rightServoPower = -1;
-            leftServoPower = .75;
+            leftServoPower = .85;
         } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
-            rightServoPower = .82;
-            leftServoPower = -1;
+            rightServoPower = .75;
+            leftServoPower = -.8;
         }
 
 
@@ -101,15 +86,12 @@ public class MainTeleOpMode extends OpMode{
 
         //Assiging POV drive values
 
-        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, -1.0, 1.0);
-        rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, -1.0, 1.0);
+        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, -0.4, 0.3);
+        rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, -0.4, 0.3);
 
         //Assigning power to each servo and clipping clampMotorPower
 
         clampMotorPower = Range.clip(clampMotorPower, -1.0, 1.0);
-
-//        leftServoPower = -clampMotorPower;
-//        rightServoPower = -clampMotorPower;
 
         //Applying power to motors and servos
 
