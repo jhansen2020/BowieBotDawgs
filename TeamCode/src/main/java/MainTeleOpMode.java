@@ -23,6 +23,18 @@ public class MainTeleOpMode extends OpMode{
     double leftJoyStick, rightJoyStick, leftMotorPower, rightMotorPower, liftMotorPower, clampMotorPower, leftServoPower, rightServoPower;
 
     final private static double JOYSTICK_DEADBAND = 0.1;
+    //Encoder Ticks Variables
+    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 2.0 / 3 ;     // This is < 1.0 if geared UP
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double     DRIVE_SPEED             = 0.6;
+    static final double     TURN_SPEED              = 0.5;
+
+   // Lift Limit varibles
+    double liftUpdatedTicks = liftMotor.getCurrentPosition();
+    int liftTotalTicks =  COUNTS_PER_INCH * 27.5;
 
     @Override
     public void init() {
@@ -69,23 +81,29 @@ public class MainTeleOpMode extends OpMode{
 
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
             rightServoPower = -1;
-            leftServoPower = .85;
+            leftServoPower = .9;
         } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
             rightServoPower = .75;
             leftServoPower = -.8;
         }
 
 
-        liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -1 :
+//        liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -1 :
+//                !gamepad1.dpad_up && gamepad2.dpad_down ? 1 : 0.0;
 
-        //Testing JOYSTICK_DEADBAND
+
+        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks > 0) {
+            liftMotorPower = -1; }
+        else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks > 0) {
+            liftMotorPower = 1;
+        }
 
         if (Math.abs(leftJoyStick) < JOYSTICK_DEADBAND) leftJoyStick = 0;
         if (Math.abs(rightJoyStick) < JOYSTICK_DEADBAND) rightJoyStick = 0;
 
         //Assiging POV drive values
 
-        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, -0.4, 0.3);
+        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, -0.4  , 0.3);
         rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, -0.4, 0.3);
 
         //Assigning power to each servo and clipping clampMotorPower
