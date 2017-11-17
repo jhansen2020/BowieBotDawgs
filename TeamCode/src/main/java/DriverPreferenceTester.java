@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import static android.os.SystemClock.sleep;
 
 @TeleOp(name = "DriverPreferenceTester", group = "TeleOp")
-
+@Disabled
 public class DriverPreferenceTester extends OpMode{
 
     //Creating variables
@@ -22,7 +22,9 @@ public class DriverPreferenceTester extends OpMode{
 
     double leftJoyStick, rightJoyStick, leftMotorPower, rightMotorPower, liftMotorPower, clampMotorPower, leftServoPower, rightServoPower, motorMin, motorMax;
 
-    final private static double JOYSTICK_DEADBAND = 0.1;
+    final private static double JOYSTICK_DEADBAND = 0.6;
+
+    String DriveMode = null;
 
 
 
@@ -69,8 +71,17 @@ public class DriverPreferenceTester extends OpMode{
             motorMin = -0.35;
         }
 
-
         if (gamepad1.left_bumper && !gamepad1.right_bumper) {
+
+            DriveMode = "POV";
+
+        }else if(gamepad1.right_bumper && !gamepad1.left_bumper){
+
+            DriveMode = "Tank";
+        }
+
+
+        if (DriveMode == "POV") {
 
             //Assigning gamepad values
 
@@ -80,13 +91,15 @@ public class DriverPreferenceTester extends OpMode{
 
             //Testing JOYSTICK_DEADBAND
 
-            DeabandTester(leftJoyStick);
-            DeabandTester(rightJoyStick);
+
 
             leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, motorMin, motorMax);
             rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, motorMin, motorMax);
-        }else if(gamepad1.right_bumper && !gamepad1.left_bumper){
-            
+
+            DeabandTester(leftJoyStick);
+            DeabandTester(rightJoyStick);
+        } else if(DriveMode == "Tank"){
+
             //Assigning gamepad values
 
             leftJoyStick = -gamepad1.left_stick_y;
@@ -95,11 +108,13 @@ public class DriverPreferenceTester extends OpMode{
 
             //Testing JOYSTICK_DEADBAND
 
-            DeabandTester(leftJoyStick);
-            DeabandTester(rightJoyStick);
+
 
             leftMotorPower = Range.clip(leftJoyStick, motorMin, motorMax);
-            rightMotorPower = Range.clip(leftJoyStick, motorMin, motorMax);
+            rightMotorPower = Range.clip(rightJoyStick, motorMin, motorMax);
+
+            DeabandTester(leftJoyStick);
+            DeabandTester(rightJoyStick);
         }
 
 
@@ -110,6 +125,10 @@ public class DriverPreferenceTester extends OpMode{
             rightFrontMotor.setPower(rightMotorPower);
             rightBackMotor.setPower(rightMotorPower);
 
+            telemetry.addData("MotorLeftPower: ", "%.2f", leftMotorPower);
+            telemetry.addData("MotorRightPower: ", "%.2f", rightMotorPower);
+            telemetry.addData("LeftJoystick: ", "%.2f", leftJoyStick);
+            telemetry.addData("RightJoystick: ", "%.2f", rightJoyStick);
         }
 
 

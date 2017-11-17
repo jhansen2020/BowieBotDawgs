@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @Autonomous(name="ColorSensorTest", group="Linear Opmode")
+@Disabled
 public class ColorSensorTest extends LinearOpMode {
 
     ColorSensor colorSensor;

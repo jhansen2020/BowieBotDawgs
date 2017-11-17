@@ -95,6 +95,7 @@ public class SensorMRGyro extends LinearOpMode {
       sleep(50);
     }
 
+
     telemetry.log().clear(); telemetry.log().add("Gyro Calibrated. Press Start.");
     telemetry.clear(); telemetry.update();
 

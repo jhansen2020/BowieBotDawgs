@@ -220,6 +220,8 @@ public class EncoderTester extends LinearOpMode {
             }
 
 
+
+
             telemetry.addData("Path", "Complete");
             telemetry.update();
         }
