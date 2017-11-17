@@ -24,9 +24,6 @@ public class MainTeleOpMode extends OpMode{
 
     final private static double JOYSTICK_DEADBAND = 0.1;
 
-    double motorMin = 0.0;
-    double motorMax = 0.0;
-
     @Override
     public void init() {
 
@@ -50,8 +47,6 @@ public class MainTeleOpMode extends OpMode{
 
         rightServoPower = 0.75;
         leftServoPower = -0.75;
-
-
     }
 
     //Code that resets the elapsed time once the driver hits play
@@ -71,15 +66,6 @@ public class MainTeleOpMode extends OpMode{
         leftJoyStick = -gamepad1.left_stick_y;
         rightJoyStick = gamepad1.right_stick_x;
 
-        if (gamepad1.a && !gamepad1.y){
-            motorMin = -0.4;
-            motorMax = 0.3;
-            
-        }else if (gamepad1.y && !gamepad1.a){
-            motorMin = -0.15;
-            motorMax = 0.15;
-        }
-
 
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
             rightServoPower = -1;
@@ -91,7 +77,6 @@ public class MainTeleOpMode extends OpMode{
 
 
         liftMotorPower = gamepad2.dpad_up && !gamepad2.dpad_down ? -1 :
-                !gamepad1.dpad_up && gamepad2.dpad_down ? 1 : 0.0;
 
         //Testing JOYSTICK_DEADBAND
 
@@ -100,8 +85,8 @@ public class MainTeleOpMode extends OpMode{
 
         //Assiging POV drive values
 
-        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, motorMin, motorMax);
-        rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, motorMin, motorMax);
+        leftMotorPower = Range.clip(leftJoyStick + rightJoyStick, -0.4, 0.3);
+        rightMotorPower = Range.clip(leftJoyStick - rightJoyStick, -0.4, 0.3);
 
         //Assigning power to each servo and clipping clampMotorPower
 
@@ -125,7 +110,4 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
 
     }
-
-
-    //use stop function to go back to us
 }
