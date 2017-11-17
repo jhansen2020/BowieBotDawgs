@@ -43,7 +43,7 @@ public class TestAutonomousMode {
     //if all is good, move towards crytobox
     //align ourselves to the next desired position using the 3 crytobox position available variables
     //insert block
-    //repeat until bottom row is filled up(use crytobox position availabe variables to determine)
+    //repeat until bottom row is filled up(use crytobox position available variables to determine)
 
 
 }
