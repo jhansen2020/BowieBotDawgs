@@ -34,7 +34,7 @@ public class MainTeleOpMode extends OpMode{
 
    // Lift Limit varibles
     double liftUpdatedTicks = liftMotor.getCurrentPosition();
-    int liftTotalTicks =  COUNTS_PER_INCH * 27.5;
+    doub liftTotalTicks =  COUNTS_PER_INCH * 27.5;
 
     @Override
     public void init() {
