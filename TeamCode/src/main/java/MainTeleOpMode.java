@@ -36,8 +36,8 @@ public class MainTeleOpMode extends OpMode{
     double motorLiftDownwardSpeed = 0.0;
     double motorLiftUpwardSpeed = 0.0;
     //Lift Limit varibles
-    double liftUpdatedTicks = liftMotor.getCurrentPosition();
-    double liftTotalTicks =  COUNTS_PER_INCH * 27.5;
+    double liftUpdatedTicks;
+    double liftTotalTicks =  COUNTS_PER_INCH * 9;
 
     double motorMovementMin = 0.0;
     double motorMovementMax = 0.0;
@@ -65,6 +65,7 @@ public class MainTeleOpMode extends OpMode{
 
         rightServoPower = 0.75;
         leftServoPower = -0.75;
+
 
 
     }
@@ -136,11 +137,19 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks > 0) {
-            liftMotorPower = motorLiftUpwardSpeed;
-        } else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks > 0) {
-            liftMotorPower = motorLiftDownwardSpeed;
-        }
+//        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >= 0) {
+//            liftMotorPower = motorLiftUpwardSpeed;
+//        } else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >=   0) {
+//            liftMotorPower = motorLiftDownwardSpeed;
+//        }
+
+        if (gamepad2.dpad_up && !gamepad2.dpad_down) {
+            liftMotorPower = -motorLiftUpwardSpeed;
+        } else if (!gamepad2.dpad_up && gamepad2.dpad_down) {
+            liftMotorPower = -motorLiftDownwardSpeed;
+        } else{
+        liftMotorPower = 0;
+    }
 
 
 
@@ -189,6 +198,8 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftMotorPower, rightMotorPower);
         telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);
         telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
+        telemetry.addData("lift", "power: (%.2f)", liftMotorPower);
+        telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
 
     }
 
