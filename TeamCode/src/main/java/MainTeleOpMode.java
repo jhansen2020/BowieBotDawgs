@@ -76,6 +76,9 @@ public class MainTeleOpMode extends OpMode{
         runtime.reset();
 
 
+        //THIS WILL MAKE THE ROBOT WAIT UNTIL AUTONOMUS PERIOD ENDS
+        while (runtime. < 30) {
+        }
 
     }
 
@@ -160,6 +163,9 @@ public class MainTeleOpMode extends OpMode{
         } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
             rightServoPower = .75;
             leftServoPower = -.8;
+        } else if (gamepad2.x){
+            rightServoPower = -.25;
+            leftServoPower = .15;
         }
 
 
