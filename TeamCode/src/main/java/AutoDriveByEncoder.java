@@ -138,19 +138,24 @@ public class AutoDriveByEncoder extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
+        int newLeftFrontTarget;
+        int newRightFrontTarget;
+        int newLeftBackTarget;
+        int newRightBackTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.leftDrive.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.rightDrive.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.leftFrontMotor.setTargetPosition(newLeftTarget);
-            robot.rightFrontMotor.setTargetPosition(newRightTarget);
-            robot.leftBackMotor.setTargetPosition(newLeftTarget);
-            robot.rightBackMotor.setTargetPosition(newRightTarget);
+            newLeftFrontTarget = robot.leftFrontMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightFrontTarget = robot.rightFrontMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newLeftBackTarget = robot.leftBackMotor.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRightBackTarget = robot.rightBackMotor.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+
+            robot.leftFrontMotor.setTargetPosition(newLeftFrontTarget);
+            robot.rightFrontMotor.setTargetPosition(newRightFrontTarget);
+            robot.leftBackMotor.setTargetPosition(newLeftBackTarget);
+            robot.rightBackMotor.setTargetPosition(newRightBackTarget);
 
             // Turn On RUN_TO_POSITION
             robot.leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -160,8 +165,10 @@ public class AutoDriveByEncoder extends LinearOpMode {
 
             // reset the timeout time and start motion.
             runtime.reset();
-            robot.leftDrive.setPower(Math.abs(speed));
-            robot.rightDrive.setPower(Math.abs(speed));
+            robot.leftFrontMotor.setPower(Math.abs(speed));
+            robot.rightFrontMotor.setPower(Math.abs(speed));
+            robot.leftBackMotor.setPower(Math.abs(speed));
+            robot.rightBackMotor.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
