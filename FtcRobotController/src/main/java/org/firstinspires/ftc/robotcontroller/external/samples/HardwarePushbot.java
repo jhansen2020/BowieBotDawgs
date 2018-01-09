@@ -66,7 +66,6 @@ public class HardwarePushbot
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
-    public AudioManager leftFrontMotor;
 
 
     /* Constructor */

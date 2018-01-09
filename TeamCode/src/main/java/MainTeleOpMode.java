@@ -17,9 +17,6 @@ public class MainTeleOpMode extends OpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    private DcMotor leftFrontMotor, leftBackMotor, rightFrontMotor, rightBackMotor,liftMotor;
-    private Servo leftClampServo, rightClampServo;
-
     double leftJoyStick, rightJoyStick, leftMotorPower, rightMotorPower, liftMotorPower, clampMotorPower, leftServoPower, rightServoPower;
 
     final private static double JOYSTICK_DEADBAND = 0.1;
@@ -36,32 +33,19 @@ public class MainTeleOpMode extends OpMode{
     double motorLiftDownwardSpeed = 0.0;
     double motorLiftUpwardSpeed = 0.0;
     //Lift Limit varibles
-    double liftUpdatedTicks;
+    //double liftUpdatedTicks;
     double liftTotalTicks =  COUNTS_PER_INCH * 9;
 
     double motorMovementMin = 0.0;
     double motorMovementMax = 0.0;
 
+    BotDawg robot;
+
     @Override
     public void init() {
 
-        //Assigning variables
-
-        leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
-        leftBackMotor = hardwareMap.dcMotor.get("Leftback");
-        rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
-        rightBackMotor = hardwareMap.dcMotor.get("Rightback");
-        liftMotor = hardwareMap.dcMotor.get("Lift");
-        leftClampServo = hardwareMap.servo.get("LeftClamp");
-        rightClampServo = hardwareMap.servo.get("RightClamp");
-
-        //Assigning directions of motors
-
-        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
-
+        robot = new BotDawg();
+        robot.init(hardwareMap);
 
         rightServoPower = 0.75;
         leftServoPower = -0.75;
@@ -76,9 +60,6 @@ public class MainTeleOpMode extends OpMode{
         runtime.reset();
 
 
-        //THIS WILL MAKE THE ROBOT WAIT UNTIL AUTONOMUS PERIOD ENDS
-        while (runtime. < 30) {
-        }
 
     }
 
@@ -101,7 +82,7 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-        liftUpdatedTicks = liftMotor.getCurrentPosition();
+//        liftUpdatedTicks = liftMotor.getCurrentPosition();
 
 
 
@@ -156,7 +137,7 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-        //Closing the lift and opening it
+        //Closing the claw and opening it
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
             rightServoPower = -1;
             leftServoPower = .85;
@@ -188,14 +169,14 @@ public class MainTeleOpMode extends OpMode{
 
         //Applying power to motors and servos
 
-        leftFrontMotor.setPower(leftMotorPower);
-        leftBackMotor.setPower(leftMotorPower);
-        rightFrontMotor.setPower(rightMotorPower);
-        rightBackMotor.setPower(rightMotorPower);
-        liftMotor.setPower(liftMotorPower);
+        robot.leftFrontMotor.setPower(leftMotorPower);
+        robot.leftBackMotor.setPower(leftMotorPower);
+        robot.rightFrontMotor.setPower(rightMotorPower);
+        robot.rightBackMotor.setPower(rightMotorPower);
+        robot.liftMotor.setPower(liftMotorPower);
 
-        leftClampServo.setPosition(leftServoPower);
-        rightClampServo.setPosition(rightServoPower);
+        robot.leftClampServo.setPosition(leftServoPower);
+        robot.rightClampServo.setPosition(rightServoPower);
 
 
 
@@ -205,7 +186,7 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);
         telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
         telemetry.addData("lift", "power: (%.2f)", liftMotorPower);
-        telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
+        //telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
 
     }
 

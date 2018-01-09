@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -51,12 +52,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class BotDawg
 {
     /* Public OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
-    public DcMotor  leftArm     = null;
-    public Servo    leftClaw    = null;
-    public Servo    rightClaw   = null;
-
+    public DcMotor  leftFrontMotor   = null;
+    public DcMotor  leftBackMotor  = null;
+    public DcMotor  rightFrontMotor     = null;
+    public DcMotor  rightBackMotor    = null;
+    public DcMotor  liftMotor   = null;
+    public Servo    leftClampServo    = null;
+    public Servo    rightClampServo   = null;
+    public ColorSensor colorSensor;
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
@@ -71,25 +74,26 @@ public class BotDawg
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
-        // Save reference to Hardware map
-        hwMap = ahwMap;
+    public void init(HardwareMap hardwareMap) {
 
-        // Define and Initialize Motors
-        leftDrive = hwMap.dcMotor.get("Leftfront");
-        rightDrive = hwMap.dcMotor.get("Rightfront");
-        leftDrive.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        //Assigning variables
 
-        // Set all motors to zero power
-        leftDrive.setPower(0);
-        rightDrive.setPower(0);
+        leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
+        leftBackMotor = hardwareMap.dcMotor.get("Leftback");
+        rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
+        rightBackMotor = hardwareMap.dcMotor.get("Rightback");
+        liftMotor = hardwareMap.dcMotor.get("Lift");
+        leftClampServo = hardwareMap.servo.get("LeftClamp");
+        rightClampServo = hardwareMap.servo.get("RightClamp");
+        colorSensor = hardwareMap.colorSensor.get("ColorSensor");
 
+        //Assigning directions of motors
 
-        // Set all motors to run without encoders.
-        // May want to use RUN_USING_ENCODERS if encoders are installed.
-        leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
+
 
 
 
