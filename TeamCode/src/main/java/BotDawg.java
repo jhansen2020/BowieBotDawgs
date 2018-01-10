@@ -59,6 +59,7 @@ public class BotDawg
     public DcMotor  liftMotor   = null;
     public Servo    leftClampServo    = null;
     public Servo    rightClampServo   = null;
+    public Servo    armServo = null;
     public ColorSensor colorSensor;
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -85,6 +86,7 @@ public class BotDawg
         liftMotor = hardwareMap.dcMotor.get("Lift");
         leftClampServo = hardwareMap.servo.get("LeftClamp");
         rightClampServo = hardwareMap.servo.get("RightClamp");
+        armServo = hardwareMap.servo.get("ServoArm");
         colorSensor = hardwareMap.colorSensor.get("ColorSensor");
 
         //Assigning directions of motors

@@ -30,6 +30,7 @@
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -64,13 +65,13 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
 //@Disabled
-public class AutoDriveByEncoder extends LinearOpMode {
+public class AutoDriveTeamRed extends LinearOpMode {
 
     /* Declare OpMode members. */
     BotDawg         robot   = new BotDawg();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
-
+    ColorSensor colorSensor;    // Hardware Device Object
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -87,6 +88,11 @@ public class AutoDriveByEncoder extends LinearOpMode {
          * The init() method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
+
+        // Turn on the LED light for better accuracy of the scan
+        colorSensor.enableLed(true);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -113,7 +119,12 @@ public class AutoDriveByEncoder extends LinearOpMode {
         telemetry.addData("Blue", robot.colorSensor.blue());
         telemetry.addData("Red", robot.colorSensor.red());
 
-//        encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
+
+        armDown(2.0);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
+        jewel(0.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
+        encoderDrive(DRIVE_SPEED,  15,  15, 5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
+        encoderDrive(TURN_SPEED, 6, -6,5.0);//THIS WILL TURN TO GET INSIDE THE SAFE ZONE
+        encoderDrive(TURN_SPEED, 2,2,5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
 
 
         sleep(1000);     // pause for servos to move
@@ -193,6 +204,31 @@ public class AutoDriveByEncoder extends LinearOpMode {
             robot.rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
+        }
+    }
+
+    //THIS IS IF WE ARE TEAM RED.
+    //TO MAKE IT TEAM BLUE WE JUST HAVE TO MAKE POSITIVE THE NEGATIVE NUMBERS AND MAKE NEGATIVE THE POSITIVE NUMBERS.
+    public void jewel(double holdTime){
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+        while(opModeIsActive() && holdTimer.time() < holdTime){
+            if (colorSensor.blue() > 3){
+                encoderDrive(TURN_SPEED, -2, 2,2.0);//IT WILL KNOCK OUT THE BLUE BALL, IT WILL TURN LEFT
+                robot.armServo.setPosition(0.0);
+                encoderDrive(TURN_SPEED,2,-2,2.0);// IT WILL GO BACK TO THE INITIAL POSITION
+            }else if (colorSensor.red() > 3){
+                encoderDrive(TURN_SPEED, 2,-2,2.0);// IT WILL KNOCK OUT THE BLUE BALL, IT WILL TURN LEFT
+                robot.armServo.setPosition(0.0);
+                encoderDrive(TURN_SPEED,-2,2,2.0);// IT WILL GO BACK TO THE INITIAL POSITION
+            }
+        }
+    }
+    public void armDown (double holdTime){
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+        while(opModeIsActive() && holdTimer.time() < holdTime){
+            robot.armServo.setPosition(1.0);//IT WILL PUT THE ARM DOWN
         }
     }
 }
