@@ -139,8 +139,8 @@ public class MainTeleOpMode extends OpMode{
 
         //Closing the claw and opening it
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
-            rightServoPower = -1;
-            leftServoPower = .85;
+            rightServoPower = -0.9;
+            leftServoPower = .75;
         } else if (gamepad2.right_trigger < 0.3 && gamepad2.left_trigger > 0.5){
             rightServoPower = .75;
             leftServoPower = -.8;
