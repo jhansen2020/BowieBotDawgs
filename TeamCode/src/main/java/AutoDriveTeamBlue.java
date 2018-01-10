@@ -63,7 +63,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Pushbot: Auto Drive By Encoder", group="Pushbot")
+@Autonomous(name="AutoTeamBlue", group="Pushbot")
 //@Disabled
 public class AutoDriveTeamBlue extends LinearOpMode {
 
@@ -122,7 +122,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
 
         armDown(2.0);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
         jewel(0.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
-        encoderDrive(DRIVE_SPEED,  15,  15, 5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
+        encoderDrive(TURN_SPEED,  6,  -6, 5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
         encoderDrive(TURN_SPEED, 6, -6,5.0);//THIS WILL TURN TO GET INSIDE THE SAFE ZONE
         encoderDrive(TURN_SPEED, 2,2,5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
 
