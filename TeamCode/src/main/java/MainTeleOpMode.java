@@ -186,6 +186,8 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);
         telemetry.addData("RightServoPower", "power: (%.2f)", rightServoPower);
         telemetry.addData("lift", "power: (%.2f)", liftMotorPower);
+        telemetry.addData("Blue", robot.colorSensor.blue());
+        telemetry.addData("Red", robot.colorSensor.red());
         //telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
 
     }

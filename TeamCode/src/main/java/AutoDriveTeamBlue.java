@@ -71,7 +71,6 @@ public class AutoDriveTeamBlue extends LinearOpMode {
     BotDawg         robot   = new BotDawg();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
-    ColorSensor colorSensor;    // Hardware Device Object
 
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
@@ -89,10 +88,8 @@ public class AutoDriveTeamBlue extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
-
         // Turn on the LED light for better accuracy of the scan
-        colorSensor.enableLed(true);
+        robot.colorSensor.enableLed(true);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Resetting Encoders");    //
@@ -120,12 +117,8 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         telemetry.addData("Red", robot.colorSensor.red());
 
 
-        armDown(2.0);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
-        jewel(0.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
-        encoderDrive(TURN_SPEED,  6,  -6, 5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
-        encoderDrive(TURN_SPEED, 6, -6,5.0);//THIS WILL TURN TO GET INSIDE THE SAFE ZONE
-        encoderDrive(TURN_SPEED, 2,2,5.0);//THIS WILL MOVE FORWARD TO GET INSIDE THE SAFE ZONE
-
+        armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
+        jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
 
         sleep(1000);     // pause for servos to move
 
@@ -213,13 +206,13 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
-            if (colorSensor.blue() > 3){
+            if (robot.colorSensor.blue() > 7){
                 encoderDrive(TURN_SPEED, 2, -2,2.0);//IT WILL KNOCK OUT THE Red BALL, IT WILL TURN Right
-                robot.armServo.setPosition(0.0);
+                robot.armServo.setPosition(1.0);
                 encoderDrive(TURN_SPEED,-2,2,2.0);// IT WILL GO BACK TO THE INITIAL POSITION
-            }else if (colorSensor.red() > 3){
+            }else if (robot.colorSensor.red() > 7){
                 encoderDrive(TURN_SPEED, -2,2,2.0);// IT WILL KNOCK OUT THE Red BALL, IT WILL TURN Left
-                robot.armServo.setPosition(0.0);
+                robot.armServo.setPosition(1.0);
                 encoderDrive(TURN_SPEED,2,-2,2.0);// IT WILL GO BACK TO THE INITIAL POSITION
             }
         }
@@ -228,7 +221,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
-            robot.armServo.setPosition(1.0);//IT WILL PUT THE ARM DOWN
+            robot.armServo.setPosition(0.0);//IT WILL PUT THE ARM DOWN
         }
     }
 }
