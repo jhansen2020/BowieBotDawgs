@@ -209,11 +209,11 @@ public class AutoDriveTeamRed extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
-            if (robot.colorSensor.blue() > 7){
-                encoderDrive(TURN_SPEED, -2, 2,2.0);//IT WILL KNOCK OUT THE BLUE BALL, IT WILL TURN LEFT
+            if (robot.colorSensor.blue() > 7) {
+                encoderDrive(TURN_SPEED, -2, 2, 2.0);
                 robot.armServo.setPosition(0.0);
-            }else if (robot.colorSensor.red() > 7){
-                encoderDrive(TURN_SPEED, 2,-2,2.0);// IT WILL KNOCK OUT THE BLUE BALL, IT WILL TURN LEFT
+            } else {
+                encoderDrive(TURN_SPEED, 2, -2, 2.0);
                 robot.armServo.setPosition(0.0);
             }
         }
