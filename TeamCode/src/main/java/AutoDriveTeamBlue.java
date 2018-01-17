@@ -200,8 +200,6 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         }
     }
 
-    //THIS IS IF WE ARE TEAM Blue.
-    //TO MAKE IT TEAM Red WE JUST HAVE TO MAKE POSITIVE THE NEGATIVE NUMBERS AND MAKE NEGATIVE THE POSITIVE NUMBERS.
     public void jewel(double holdTime){
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();

@@ -47,8 +47,10 @@ public class MainTeleOpMode extends OpMode{
         robot = new BotDawg();
         robot.init(hardwareMap);
 
-        rightServoPower = 0.75;
-        leftServoPower = -0.75;
+
+        //I'VE SWITCH THE POWER ON THE SERVO SO THAT WHEN THE ROBOT STARTS IT CLOSES THE ARMS TO GRAB THE BLOCK
+        rightServoPower = -0.75;
+        leftServoPower = 0.75;
 
 
 
