@@ -97,62 +97,12 @@ public class AutoDriveTeamBlue extends LinearOpMode {
     VuforiaLocalizer vuforia;
     @Override
     public void runOpMode() {
+
+
         /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-
-
-        robot.init(hardwareMap);
-
-
-
-        // Turn on the LED light for better accuracy of the scan
-        robot.colorSensor.enableLed(true);
-
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData("Status", "Resetting Encoders");
-        telemetry.update();
-
-        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
-        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
-        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
-        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
-        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
-        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
-        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
-
-        // Send telemetry message to indicate successful Encoder reset
-        telemetry.addData("Path0",  "Starting at %7d :%7d",
-                robot.leftFrontMotor.getCurrentPosition(),
-                robot.rightFrontMotor.getCurrentPosition(),
-                robot.leftBackMotor.getCurrentPosition(),
-                robot.rightBackMotor.getCurrentPosition());
-        telemetry.update();
-
-
-        // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        telemetry.addData("Blue", robot.colorSensor.blue());
-        telemetry.addData("Red", robot.colorSensor.red());
-
-
-        armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
-        jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
-
-
-
-
-
-
-        sleep(1000);     // pause for servos to move
-
-        telemetry.addData("Path", "Complete");
-        telemetry.update();
-
-
-
-
         //Vuforia
 
 
@@ -254,6 +204,58 @@ public class AutoDriveTeamBlue extends LinearOpMode {
 
             telemetry.update();
         }
+
+        robot.init(hardwareMap);
+
+
+
+        // Turn on the LED light for better accuracy of the scan
+        robot.colorSensor.enableLed(true);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");
+        telemetry.update();
+
+        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
+        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
+        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
+        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
+        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
+        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
+        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
+
+        // Send telemetry message to indicate successful Encoder reset
+        telemetry.addData("Path0",  "Starting at %7d :%7d",
+                robot.leftFrontMotor.getCurrentPosition(),
+                robot.rightFrontMotor.getCurrentPosition(),
+                robot.leftBackMotor.getCurrentPosition(),
+                robot.rightBackMotor.getCurrentPosition());
+        telemetry.update();
+
+
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
+        telemetry.addData("Blue", robot.colorSensor.blue());
+        telemetry.addData("Red", robot.colorSensor.red());
+
+
+        armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
+        jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
+
+        SafeZone(2.5, vuMark);
+
+
+
+
+        sleep(1000);     // pause for servos to move
+
+        telemetry.addData("Path", "Complete");
+        telemetry.update();
+
+
+
+
+
     }
 
     /*
@@ -349,6 +351,13 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         while(opModeIsActive() && holdTimer.time() < holdTime){
             robot.armServo.setPosition(1.0);//IT WILL PUT THE ARM DOWN
         }
+    }
+
+    public void SafeZone (double holdtime, RelicRecoveryVuMark vuMark){
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+
+        if ( vuMark== RelicRecoveryVuMark.CENTER){}
     }
 
     String format(OpenGLMatrix transformationMatrix) {
