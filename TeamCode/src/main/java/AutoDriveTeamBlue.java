@@ -337,11 +337,13 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             if (robot.colorSensor.blue() > robot.colorSensor.red() + 3) {
-                encoderDrive(TURN_SPEED, 2, -2, 2.0);
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
                 robot.armServo.setPosition(0.0);
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
             } else {
-                encoderDrive(TURN_SPEED, -2, 2, 2.0);
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
                 robot.armServo.setPosition(0.0);
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
             }
         }
     }
@@ -357,7 +359,24 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
 
-        if ( vuMark== RelicRecoveryVuMark.CENTER){}
+        switch (vuMark){
+            case LEFT:
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+                encoderDrive(TURN_SPEED,-12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case RIGHT:
+                encoderDrive(DRIVE_SPEED, 40,40, 2.0);
+                encoderDrive(TURN_SPEED,-12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case CENTER:
+                encoderDrive(DRIVE_SPEED, 36, 36, 2.0);
+                encoderDrive(TURN_SPEED, -12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case UNKNOWN:
+                encoderDrive(DRIVE_SPEED, 26, 26, 2.0);
+                encoderDrive(TURN_SPEED, -12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+        }
     }
 
     String format(OpenGLMatrix transformationMatrix) {
