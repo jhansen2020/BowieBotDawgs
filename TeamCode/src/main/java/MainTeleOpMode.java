@@ -75,33 +75,11 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-
-
-
-        //Nick, you didn't have the Ticks being updated so I tried to update them here. Please review this and
-        //see if I did this wrong as I have not tested this. I managed to merge our work and I added a fast and
-        //slow mode onto the lift as well. Please review it and understand it when you read this comment
-
-
-
-//        liftUpdatedTicks = liftMotor.getCurrentPosition();
-
-
-
-
-
-
-
-
-
-
-
-
         //This is for limiting the speed of movement motors
 
         if (gamepad1.a && !gamepad1.y){
             motorMovementMin = -0.4;
-            motorMovementMax = 0.3;
+            motorMovementMax = 0.6;
 
         }else if (gamepad1.y && !gamepad1.a){
             motorMovementMin = -0.15;
@@ -121,13 +99,6 @@ public class MainTeleOpMode extends OpMode{
             motorLiftUpwardSpeed = 0.50;
         }
 
-
-
-//        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >= 0) {
-//            liftMotorPower = motorLiftUpwardSpeed;
-//        } else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >=   0) {
-//            liftMotorPower = motorLiftDownwardSpeed;
-//        }
 
         if (gamepad2.dpad_up && !gamepad2.dpad_down) {
             liftMotorPower = -motorLiftUpwardSpeed;
