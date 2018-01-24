@@ -358,7 +358,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
     public void SafeZone (double holdtime, RelicRecoveryVuMark vuMark){
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
-
+        // Depending on where we have to put the block it moves x inches.
         switch (vuMark){
             case LEFT:
                 encoderDrive(DRIVE_SPEED, 22, 22, 2.0);

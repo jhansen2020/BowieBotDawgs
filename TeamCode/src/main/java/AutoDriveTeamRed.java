@@ -351,6 +351,30 @@ public class AutoDriveTeamRed extends LinearOpMode {
         }
     }
 
+    public void SafeZone (double holdtime, RelicRecoveryVuMark vuMark){
+        ElapsedTime holdTimer = new ElapsedTime();
+        holdTimer.reset();
+        // Depending on where we have to put the block it moves x inches.
+        switch (vuMark){
+            case LEFT:
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+                encoderDrive(TURN_SPEED,-12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case RIGHT:
+                encoderDrive(DRIVE_SPEED, 40,40, 2.0);
+                encoderDrive(TURN_SPEED,-12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case CENTER:
+                encoderDrive(DRIVE_SPEED, 36, 36, 2.0);
+                encoderDrive(TURN_SPEED, -12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+            case UNKNOWN:
+                encoderDrive(DRIVE_SPEED, 26, 26, 2.0);
+                encoderDrive(TURN_SPEED, -12,12,2.0);
+                encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
+        }
+    }
+
     String format(OpenGLMatrix transformationMatrix) {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
