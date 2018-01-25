@@ -156,7 +156,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
 
         relicTrackables.activate();
 
-        while (opModeIsActive()) {
+
 
             /**
              * See if any of the instances of {@link relicTemplate} are currently visible.
@@ -203,7 +203,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
             }
 
             telemetry.update();
-        }
+
 
         robot.init(hardwareMap);
 
