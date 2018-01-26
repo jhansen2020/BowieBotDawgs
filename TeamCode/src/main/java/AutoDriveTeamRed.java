@@ -334,12 +334,14 @@ public class AutoDriveTeamRed extends LinearOpMode {
         ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
-            if (robot.colorSensor.blue() < robot.colorSensor.red() + 3) {
-                encoderDrive(TURN_SPEED, -2, 2, 2.0);
+            if (robot.colorSensor.blue() > robot.colorSensor.red() + 3) {
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
                 robot.armServo.setPosition(0.0);
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
             } else {
-                encoderDrive(TURN_SPEED, 2, -2, 2.0);
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
                 robot.armServo.setPosition(0.0);
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
             }
         }
     }
