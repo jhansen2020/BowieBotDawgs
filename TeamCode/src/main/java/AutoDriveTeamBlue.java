@@ -216,13 +216,13 @@ public class AutoDriveTeamBlue extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
 
-        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
-        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
-        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
-        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
-        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
-        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
-        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
+//        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
+//        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
+//        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
+//        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
+//        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
+//        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
+//        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -333,22 +333,28 @@ public class AutoDriveTeamBlue extends LinearOpMode {
     }
 
     public void jewel(double holdTime){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             if (robot.colorSensor.blue() > robot.colorSensor.red() + 3) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
                 robot.armServo.setPosition(0.0);
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
-            } else {
+            } else if (robot.colorSensor.blue() < robot.colorSensor.red() - 3) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
                 robot.armServo.setPosition(0.0);
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
+            } else {
+                robot.leftBackMotor.setPower(0);
+                robot.leftFrontMotor.setPower(0);
+                robot.rightBackMotor.setPower(0);
+                robot.leftBackMotor.setPower(0);
             }
         }
+        robot.armServo.setPosition(0.0);
     }
     public void armDown (double holdTime){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             robot.armServo.setPosition(1.0);//IT WILL PUT THE ARM DOWN
@@ -356,7 +362,7 @@ public class AutoDriveTeamBlue extends LinearOpMode {
     }
 
     public void SafeZone (double holdtime, RelicRecoveryVuMark vuMark){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         // Depending on where we have to put the block it moves x inches.
         switch (vuMark){

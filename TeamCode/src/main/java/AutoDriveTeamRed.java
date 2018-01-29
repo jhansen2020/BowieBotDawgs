@@ -214,13 +214,13 @@ public class AutoDriveTeamRed extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");
         telemetry.update();
 
-        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
-        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
-        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
-        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
-        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
-        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
-        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
+//        robot.leftFrontMotor = hardwareMap.dcMotor.get("Leftfront");
+//        robot.leftBackMotor = hardwareMap.dcMotor.get("Leftback");
+//        robot.rightFrontMotor = hardwareMap.dcMotor.get("Rightfront");
+//        robot.rightBackMotor = hardwareMap.dcMotor.get("Rightback");
+//        robot.liftMotor = hardwareMap.dcMotor.get("Lift");
+//        robot.leftClampServo = hardwareMap.servo.get("LeftClamp");
+//        robot.rightClampServo = hardwareMap.servo.get("RightClamp");
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -240,7 +240,7 @@ public class AutoDriveTeamRed extends LinearOpMode {
         armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
         jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
 
-        SafeZone(2.5, vuMark);
+//        SafeZone(2.5, vuMark);
 
 
 
@@ -338,12 +338,18 @@ public class AutoDriveTeamRed extends LinearOpMode {
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
                 robot.armServo.setPosition(0.0);
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
-            } else {
+            } else if(robot.colorSensor.blue() < robot.colorSensor.red() - 3) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
                 robot.armServo.setPosition(0.0);
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
+            }else {
+                robot.leftBackMotor.setPower(0);
+                robot.leftFrontMotor.setPower(0);
+                robot.rightBackMotor.setPower(0);
+                robot.leftBackMotor.setPower(0);
             }
         }
+        robot.armServo.setPosition(0.0);
     }
     public void armDown (double holdTime){
         ElapsedTime holdTimer = new ElapsedTime();

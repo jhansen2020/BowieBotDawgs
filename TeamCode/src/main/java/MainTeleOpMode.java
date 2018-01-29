@@ -7,6 +7,20 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.ClassFactory;
+import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
+import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+
 import static android.os.SystemClock.sleep;
 
 @TeleOp(name = "MainTeleOpMode", group = "TeleOp")
@@ -38,23 +52,14 @@ public class MainTeleOpMode extends OpMode{
 
     double motorMovementMin = 0.0;
     double motorMovementMax = 0.0;
+    VuforiaLocalizer vuforia;
 
     BotDawg robot;
+    RelicRecoveryVuMark vuMark= null;
 
     @Override
     public void init() {
 
-        robot = new BotDawg();
-        robot.init(hardwareMap);
-
-
-        //I'VE SWITCH THE POWER ON THE SERVO SO THAT WHEN THE ROBOT STARTS IT CLOSES THE ARMS TO GRAB THE BLOCK
-        rightServoPower = -0.75;
-        leftServoPower = 0.75;
-
-
-
-    }
 
     //Code that resets the elapsed time once the driver hits play
     @Override
@@ -161,10 +166,15 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("lift", "power: (%.2f)", liftMotorPower);
         telemetry.addData("Blue", robot.colorSensor.blue());
         telemetry.addData("Red", robot.colorSensor.red());
+        telemetry.addData("VuMark", vuMark);
         //telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
-
+        telemetry.update();
     }
 
 
     //use stop function to go back to bottom position
+
+    String format(OpenGLMatrix transformationMatrix) {
+        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
+    }
 }
