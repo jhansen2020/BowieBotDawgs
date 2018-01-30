@@ -65,7 +65,7 @@ public class MainTeleOpMode extends OpMode{
 
     }
 
-    @Override
+
     public void loop() {
 
         //Assigning gamepad values
