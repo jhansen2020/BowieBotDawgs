@@ -7,20 +7,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
-import org.firstinspires.ftc.robotcore.external.navigation.VuMarkInstanceId;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-
 import static android.os.SystemClock.sleep;
 
 @TeleOp(name = "MainTeleOpMode", group = "TeleOp")
@@ -52,14 +38,23 @@ public class MainTeleOpMode extends OpMode{
 
     double motorMovementMin = 0.0;
     double motorMovementMax = 0.0;
-    VuforiaLocalizer vuforia;
 
     BotDawg robot;
-    RelicRecoveryVuMark vuMark= null;
 
     @Override
     public void init() {
 
+        robot = new BotDawg();
+        robot.init(hardwareMap);
+
+
+        //I'VE SWITCH THE POWER ON THE SERVO SO THAT WHEN THE ROBOT STARTS IT CLOSES THE ARMS TO GRAB THE BLOCK
+        rightServoPower = -0.75;
+        leftServoPower = 0.75;
+
+
+
+    }
 
     //Code that resets the elapsed time once the driver hits play
     @Override
@@ -80,11 +75,33 @@ public class MainTeleOpMode extends OpMode{
 
 
 
+
+
+
+        //Nick, you didn't have the Ticks being updated so I tried to update them here. Please review this and
+        //see if I did this wrong as I have not tested this. I managed to merge our work and I added a fast and
+        //slow mode onto the lift as well. Please review it and understand it when you read this comment
+
+
+
+//        liftUpdatedTicks = liftMotor.getCurrentPosition();
+
+
+
+
+
+
+
+
+
+
+
+
         //This is for limiting the speed of movement motors
 
         if (gamepad1.a && !gamepad1.y){
             motorMovementMin = -0.4;
-            motorMovementMax = 0.6;
+            motorMovementMax = 0.3;
 
         }else if (gamepad1.y && !gamepad1.a){
             motorMovementMin = -0.15;
@@ -104,6 +121,13 @@ public class MainTeleOpMode extends OpMode{
             motorLiftUpwardSpeed = 0.50;
         }
 
+
+
+//        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >= 0) {
+//            liftMotorPower = motorLiftUpwardSpeed;
+//        } else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >=   0) {
+//            liftMotorPower = motorLiftDownwardSpeed;
+//        }
 
         if (gamepad2.dpad_up && !gamepad2.dpad_down) {
             liftMotorPower = -motorLiftUpwardSpeed;
@@ -166,15 +190,10 @@ public class MainTeleOpMode extends OpMode{
         telemetry.addData("lift", "power: (%.2f)", liftMotorPower);
         telemetry.addData("Blue", robot.colorSensor.blue());
         telemetry.addData("Red", robot.colorSensor.red());
-        telemetry.addData("VuMark", vuMark);
         //telemetry.addData("CurrentPostition", "currentPosition: (%.2f)", liftUpdatedTicks);
-        telemetry.update();
+
     }
 
 
     //use stop function to go back to bottom position
-
-    String format(OpenGLMatrix transformationMatrix) {
-        return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
-    }
 }
