@@ -244,7 +244,7 @@ public class AutoDriveTeamRed extends LinearOpMode {
 
         encoderDrive(DRIVE_SPEED, 36, 36, 2.0);
         sleep(500);     // pause for servos to move
-        encoderDrive(TURN_SPEED, -12,12,2.0);
+        encoderDrive(TURN_SPEED, 12,-12,2.0);
         sleep(500);     // pause for servos to move
         encoderDrive(DRIVE_SPEED, 22, 22, 2.0);
 
