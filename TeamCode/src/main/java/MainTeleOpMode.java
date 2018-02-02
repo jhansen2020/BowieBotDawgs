@@ -52,7 +52,9 @@ public class MainTeleOpMode extends OpMode{
         rightServoPower = -0.75;
         leftServoPower = 0.75;
 
-
+        if(robot.armServo.getPosition() == 0.0){
+            robot.armServo.setPosition(1.0);
+        }
 
     }
 
@@ -60,8 +62,6 @@ public class MainTeleOpMode extends OpMode{
     @Override
     public void start() {
         runtime.reset();
-
-
 
     }
 
@@ -74,6 +74,10 @@ public class MainTeleOpMode extends OpMode{
         rightJoyStick = gamepad1.right_stick_x;
 
 
+        // Making a button so that the arm for the jewel can be brought up in a extreme case scenario
+        if (gamepad2.x && !gamepad2.y || gamepad2.a){
+            robot.armServo.setPosition(1.0);
+        }
 
 
 
@@ -81,20 +85,6 @@ public class MainTeleOpMode extends OpMode{
         //Nick, you didn't have the Ticks being updated so I tried to update them here. Please review this and
         //see if I did this wrong as I have not tested this. I managed to merge our work and I added a fast and
         //slow mode onto the lift as well. Please review it and understand it when you read this comment
-
-
-
-//        liftUpdatedTicks = liftMotor.getCurrentPosition();
-
-
-
-
-
-
-
-
-
-
 
 
         //This is for limiting the speed of movement motors
@@ -121,13 +111,6 @@ public class MainTeleOpMode extends OpMode{
             motorLiftUpwardSpeed = 0.50;
         }
 
-
-
-//        if (gamepad2.dpad_up && !gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >= 0) {
-//            liftMotorPower = motorLiftUpwardSpeed;
-//        } else if (!gamepad2.dpad_up && gamepad2.dpad_down && liftUpdatedTicks < liftTotalTicks && liftUpdatedTicks >=   0) {
-//            liftMotorPower = motorLiftDownwardSpeed;
-//        }
 
         if (gamepad2.dpad_up && !gamepad2.dpad_down) {
             liftMotorPower = -motorLiftUpwardSpeed;
