@@ -76,9 +76,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoTeamRed", group="Pushbot")
+@Autonomous(name="AutoTeamBlue", group="Pushbot")
 //@Disabled
-public class AutoTeamRed1 extends LinearOpMode {
+public class AutoBlueForward extends LinearOpMode {
 
 
 
@@ -91,20 +91,22 @@ public class AutoTeamRed1 extends LinearOpMode {
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                                                      (WHEEL_DIAMETER_INCHES * 3.1415);
+            (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1.0;
     static final double     TURN_SPEED              = 0.5;
     VuforiaLocalizer vuforia;
     @Override
     public void runOpMode() {
+
+
         /*
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
-//         */
-//        //Vuforia
-//
-//
-//
+         */
+        //Vuforia
+
+
+
 //        RelicRecoveryVuMark vuMark= null;
 //        /*
 //         * To start up Vuforia, tell it the view that we wish to use for camera monitor (on the RC phone);
@@ -156,51 +158,51 @@ public class AutoTeamRed1 extends LinearOpMode {
 //
 //
 //
-//        /**
-//         * See if any of the instances of {@link relicTemplate} are currently visible.
-//         * {@link RelicRecoveryVuMark} is an enum which can have the following values:
-//         * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
-//         * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
-//         */
-//        vuMark = RelicRecoveryVuMark.from(relicTemplate);
+//            /**
+//             * See if any of the instances of {@link relicTemplate} are currently visible.
+//             * {@link RelicRecoveryVuMark} is an enum which can have the following values:
+//             * UNKNOWN, LEFT, CENTER, and RIGHT. When a VuMark is visible, something other than
+//             * UNKNOWN will be returned by {@link RelicRecoveryVuMark#from(VuforiaTrackable)}.
+//             */
+//            vuMark = RelicRecoveryVuMark.from(relicTemplate);
 //
 //
 //
-//        if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
+//            if (vuMark != RelicRecoveryVuMark.UNKNOWN) {
 //
 //                /* Found an instance of the template. In the actual game, you will probably
 //                 * loop until this condition occurs, then move on to act accordingly depending
 //                 * on which VuMark was visible. */
-//            telemetry.addData("VuMark", "%s visible", vuMark);
+//                telemetry.addData("VuMark", "%s visible", vuMark);
 //
 //                /* For fun, we also exhibit the navigational pose. In the Relic Recovery game,
 //                 * it is perhaps unlikely that you will actually need to act on this pose information, but
 //                 * we illustrate it nevertheless, for completeness. */
-//            OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
-//            telemetry.addData("Pose", format(pose));
+//                OpenGLMatrix pose = ((VuforiaTrackableDefaultListener)relicTemplate.getListener()).getPose();
+//                telemetry.addData("Pose", format(pose));
 //
 //                /* We further illustrate how to decompose the pose into useful rotational and
 //                 * translational components */
-//            if (pose != null) {
-//                VectorF trans = pose.getTranslation();
-//                Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+//                if (pose != null) {
+//                    VectorF trans = pose.getTranslation();
+//                    Orientation rot = Orientation.getOrientation(pose, AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 //
-//                // Extract the X, Y, and Z components of the offset of the target relative to the robot
-//                double tX = trans.get(0);
-//                double tY = trans.get(1);
-//                double tZ = trans.get(2);
+//                    // Extract the X, Y, and Z components of the offset of the target relative to the robot
+//                    double tX = trans.get(0);
+//                    double tY = trans.get(1);
+//                    double tZ = trans.get(2);
 //
-//                // Extract the rotational components of the target relative to the robot
-//                double rX = rot.firstAngle;
-//                double rY = rot.secondAngle;
-//                double rZ = rot.thirdAngle;
+//                    // Extract the rotational components of the target relative to the robot
+//                    double rX = rot.firstAngle;
+//                    double rY = rot.secondAngle;
+//                    double rZ = rot.thirdAngle;
+//                }
 //            }
-//        }
-//        else {
-//            telemetry.addData("VuMark", "not visible");
-//        }
+//            else {
+//                telemetry.addData("VuMark", "not visible");
+//            }
 //
-//        telemetry.update();
+//            telemetry.update();
 
 
         robot.init(hardwareMap);
@@ -224,10 +226,10 @@ public class AutoTeamRed1 extends LinearOpMode {
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
-                          robot.leftFrontMotor.getCurrentPosition(),
-                          robot.rightFrontMotor.getCurrentPosition(),
-                          robot.leftBackMotor.getCurrentPosition(),
-                          robot.rightBackMotor.getCurrentPosition());
+                robot.leftFrontMotor.getCurrentPosition(),
+                robot.rightFrontMotor.getCurrentPosition(),
+                robot.leftBackMotor.getCurrentPosition(),
+                robot.rightBackMotor.getCurrentPosition());
         telemetry.update();
 
 
@@ -240,14 +242,13 @@ public class AutoTeamRed1 extends LinearOpMode {
         armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
         jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
 
-//        SafeZone(2.5, vuMark);
+       // SafeZone(2.5, vuMark);
 
         encoderDrive(DRIVE_SPEED, 20, 20, 2.0);
         sleep(500);     // pause for servos to move
         encoderDrive(TURN_SPEED, 8,-8,2.0);
         sleep(500);     // pause for servos to move
         encoderDrive(DRIVE_SPEED, 4, 4, 2.0);
-
 
         sleep(1000);     // pause for servos to move
 
@@ -310,13 +311,13 @@ public class AutoTeamRed1 extends LinearOpMode {
             // However, if you require that BOTH motors have finished their moves before the robot continues
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
-                   (runtime.seconds() < timeoutS) &&
-                   (robot.leftFrontMotor.isBusy() && robot.rightFrontMotor.isBusy())) {
+                    (runtime.seconds() < timeoutS) &&
+                    (robot.leftFrontMotor.isBusy() && robot.rightFrontMotor.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path2",  "Running at %7d :%7d",
-                                            robot.leftFrontMotor.getCurrentPosition(),
-                                            robot.rightFrontMotor.getCurrentPosition());
+                        robot.leftFrontMotor.getCurrentPosition(),
+                        robot.rightFrontMotor.getCurrentPosition());
                 telemetry.update();
             }
 
@@ -335,18 +336,18 @@ public class AutoTeamRed1 extends LinearOpMode {
     }
 
     public void jewel(double holdTime){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             if (robot.colorSensor.blue() > robot.colorSensor.red() + 2) {
-                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
-                robot.armServo.setPosition(1.0);
-                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
-            } else if(robot.colorSensor.blue() < robot.colorSensor.red() - 2) {
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
                 robot.armServo.setPosition(1.0);
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
-            }else {
+            } else if (robot.colorSensor.blue() < robot.colorSensor.red() - 2) {
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
+                robot.armServo.setPosition(1.0);
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
+            } else {
                 robot.leftBackMotor.setPower(0);
                 robot.leftFrontMotor.setPower(0);
                 robot.rightBackMotor.setPower(0);
@@ -356,7 +357,7 @@ public class AutoTeamRed1 extends LinearOpMode {
         robot.armServo.setPosition(1.0);
     }
     public void armDown (double holdTime){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             robot.armServo.setPosition(0.0);//IT WILL PUT THE ARM DOWN
@@ -364,7 +365,7 @@ public class AutoTeamRed1 extends LinearOpMode {
     }
 
     public void SafeZone (double holdtime, RelicRecoveryVuMark vuMark){
-        ElapsedTime holdTimer = new ElapsedTime();
+        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
         holdTimer.reset();
         // Depending on where we have to put the block it moves x inches.
         switch (vuMark){

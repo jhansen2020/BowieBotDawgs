@@ -78,7 +78,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 @Autonomous(name="AutoTeamBlue", group="Pushbot")
 //@Disabled
-public class AutoTeamBlue1 extends LinearOpMode {
+public class AutoBlueBackward extends LinearOpMode {
 
 
 
@@ -96,7 +96,7 @@ public class AutoTeamBlue1 extends LinearOpMode {
     static final double     TURN_SPEED              = 0.5;
     VuforiaLocalizer vuforia;
     @Override
-    public void runOpMode() {
+    public void runOpMode(){
 
 
         /*
@@ -242,9 +242,9 @@ public class AutoTeamBlue1 extends LinearOpMode {
         armDown(2.5);//THIS WILL MOVE THE ARM WITH THE COLOR SENSOR DOWN
         jewel(2.5);//THIS WILL SCAN THE COLOR, DECIDE IN WHAT DIRECTION TO TURN, AND TURN
 
-       // SafeZone(2.5, vuMark);
+        // SafeZone(2.5, vuMark);
 
-        encoderDrive(DRIVE_SPEED, 20, 20, 2.0);
+        encoderDrive(DRIVE_SPEED, -20, -20, 2.0);
         sleep(500);     // pause for servos to move
         encoderDrive(TURN_SPEED, 8,-8,2.0);
         sleep(500);     // pause for servos to move
@@ -392,3 +392,7 @@ public class AutoTeamBlue1 extends LinearOpMode {
         return (transformationMatrix != null) ? transformationMatrix.formatAsTransform() : "null";
     }
 }
+
+
+
+
