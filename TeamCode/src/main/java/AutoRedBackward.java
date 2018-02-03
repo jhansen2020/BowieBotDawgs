@@ -244,11 +244,11 @@ public class AutoRedBackward extends LinearOpMode {
 
         // SafeZone(2.5, vuMark);
 
-        encoderDrive(DRIVE_SPEED, -20, -20, 2.0);
+        encoderDrive(DRIVE_SPEED, 15,15, 2.0);
         sleep(500);     // pause for servos to move
-        encoderDrive(TURN_SPEED, 8,-8,2.0);
+        encoderDrive(TURN_SPEED, -8,8,2.0);
         sleep(500);     // pause for servos to move
-        encoderDrive(DRIVE_SPEED, 4, 4, 2.0);
+        encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
 
         sleep(1000);     // pause for servos to move
 
