@@ -76,7 +76,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoTeamBlue", group="Pushbot")
+@Autonomous(name="AutoTeamBlueBackward", group="Pushbot")
 //@Disabled
 public class AutoBlueBackward extends LinearOpMode {
 

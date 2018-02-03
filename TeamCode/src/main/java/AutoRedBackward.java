@@ -76,7 +76,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="AutoTeamBlue", group="Pushbot")
+@Autonomous(name="AutoTeamBlueBlackward", group="Pushbot")
 //@Disabled
 public class AutoRedBackward extends LinearOpMode {
 
@@ -336,18 +336,18 @@ public class AutoRedBackward extends LinearOpMode {
     }
 
     public void jewel(double holdTime){
-        ElapsedTime holdTimer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
+        ElapsedTime holdTimer = new ElapsedTime();
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             if (robot.colorSensor.blue() > robot.colorSensor.red() + 2) {
-                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
-                robot.armServo.setPosition(1.0);
-                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
-            } else if (robot.colorSensor.blue() < robot.colorSensor.red() - 2) {
                 encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
                 robot.armServo.setPosition(1.0);
                 encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
-            } else {
+            } else if(robot.colorSensor.blue() < robot.colorSensor.red() - 2) {
+                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
+                robot.armServo.setPosition(1.0);
+                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
+            }else {
                 robot.leftBackMotor.setPower(0);
                 robot.leftFrontMotor.setPower(0);
                 robot.rightBackMotor.setPower(0);
