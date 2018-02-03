@@ -248,7 +248,7 @@ public class AutoBlueBackward extends LinearOpMode {
         sleep(500);     // pause for servos to move
         encoderDrive(TURN_SPEED, 8,-8,2.0);
         sleep(500);     // pause for servos to move
-        encoderDrive(DRIVE_SPEED, 4, 4, 2.0);
+        encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
 
         sleep(1000);     // pause for servos to move
 
@@ -340,13 +340,13 @@ public class AutoBlueBackward extends LinearOpMode {
         holdTimer.reset();
         while(opModeIsActive() && holdTimer.time() < holdTime){
             if (robot.colorSensor.blue() > robot.colorSensor.red() + 2) {
-                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
+                encoderDrive(DRIVE_SPEED, -3, -3, 2.0);
                 robot.armServo.setPosition(1.0);
-                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
+                encoderDrive(DRIVE_SPEED, 3, 3, 2.0);
             } else if (robot.colorSensor.blue() < robot.colorSensor.red() - 2) {
-                encoderDrive(DRIVE_SPEED, 2, 2, 2.0);
+                encoderDrive(DRIVE_SPEED, 3, 3, 2.0);
                 robot.armServo.setPosition(1.0);
-                encoderDrive(DRIVE_SPEED, -2, -2, 2.0);
+                encoderDrive(DRIVE_SPEED, -3, -3, 2.0);
             } else {
                 robot.leftBackMotor.setPower(0);
                 robot.leftFrontMotor.setPower(0);
