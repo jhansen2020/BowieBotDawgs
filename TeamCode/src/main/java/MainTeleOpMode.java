@@ -78,16 +78,8 @@ public class MainTeleOpMode extends OpMode{
         if (gamepad2.x && !gamepad2.y || gamepad2.a){
             robot.armServo.setPosition(1.0);
         }
-
-
-
-
-        //Nick, you didn't have the Ticks being updated so I tried to update them here. Please review this and
-        //see if I did this wrong as I have not tested this. I managed to merge our work and I added a fast and
-        //slow mode onto the lift as well. Please review it and understand it when you read this comment
-
-
-        //This is for limiting the speed of movement motors
+        ///This is to select if the driver wants slow mode or fast mode. Pressing gamepad A will use
+        //fast mode while pressing gamepad Y will use slow mode
 
         if (gamepad1.a && !gamepad1.y){
             motorMovementMin = -0.4;
@@ -98,9 +90,7 @@ public class MainTeleOpMode extends OpMode{
             motorMovementMax = 0.15;
         }
 
-
-
-        //This is for limiting the speed of the Lift motor
+        //This is for limiting the speed of the Lift motor if the driver wants to slow it down.
 
         if (gamepad2.a && !gamepad2.y){
             motorLiftDownwardSpeed = -1;
@@ -122,7 +112,8 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-        //Closing the claw and opening it
+        //This code cheks to see if either of the triggers are pressed and the corresponding action
+        //is actuated
         if (gamepad2.right_trigger > 0.5 && gamepad2.left_trigger < 0.3){
             rightServoPower = -0.9;
             leftServoPower = .75;
@@ -134,11 +125,7 @@ public class MainTeleOpMode extends OpMode{
             leftServoPower = .15;
         }
 
-
-
         //Testing JOYSTICK_DEADBAND
-
-
 
         if (Math.abs(leftJoyStick) < JOYSTICK_DEADBAND) leftJoyStick = 0;
         if (Math.abs(rightJoyStick) < JOYSTICK_DEADBAND) rightJoyStick = 0;
@@ -152,8 +139,8 @@ public class MainTeleOpMode extends OpMode{
 
         clampMotorPower = Range.clip(clampMotorPower, -1.0, 1.0);
 
-        //Applying power to motors and servos
-
+        //We use the value selected by the driver and these lines of codes set the power
+        //to the motor
         robot.leftFrontMotor.setPower(leftMotorPower);
         robot.leftBackMotor.setPower(leftMotorPower);
         robot.rightFrontMotor.setPower(rightMotorPower);
@@ -165,7 +152,8 @@ public class MainTeleOpMode extends OpMode{
 
 
 
-        // Show the elapsed game time and wheel power.
+        //Telemetry is not used to control the robot, it is purely to help debug by showing
+        //Information on the phone
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftMotorPower, rightMotorPower);
         telemetry.addData("LeftServoPower", "power: (%.2f)", leftServoPower);

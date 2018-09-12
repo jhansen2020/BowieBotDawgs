@@ -95,12 +95,6 @@ public class BotDawg
         leftBackMotor.setDirection(DcMotor.Direction.REVERSE);
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         rightBackMotor.setDirection(DcMotor.Direction.FORWARD);
-
-
-
-
-
-
     }
  }
 
